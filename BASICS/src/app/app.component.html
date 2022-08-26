@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Poppy</title>
+</head>
+<body>
+    <h1>bebo ka poppy</h1>
+    
+    <h2 style="display: flex;  justify-content: space-around; flex-wrap: wrap;">child to parent</h2>
+
+    <!-- <test-1> </test-1> pahle waala basic chije samajhne ke lie-->
+    <!-- <app-users name="poppy" reason="sending data dynamically just like props in react using Input class"></app-users>
+    <app-users name="bebo" reason="ie. we can also say the method is used to pass property from parent to child"></app-users> -->
+    <!-- <img src="assets/1.jpeg"/>    so send img -->
+    <!-- <app-users [name]="user_comp1[0].name" [reason]="user_comp1[0].reason" [img]="user_comp1[0].imagePath"></app-users>
+    <app-users [name]="user_comp1[1].name" [reason]="user_comp1[1].reason" [img]="user_comp1[1].imagePath"></app-users> used states and props together -->
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;" appHighlight>
+    <app-users *ngFor="let u of user_comp1" [name]="u.name" [reason]="u.reason" [img]="u.imagePath" [no]="u.no" (myevent1)="received_comp1($event)">
+      <h2> {{title}}</h2>
+      <p>isse child me ng-content se pass krna he</p> 
+      <input type="text"[(ngModel)]="title"/>
+    </app-users>
+    </div>
+    <h3>{{phoneNo | cc:"IND"}}</h3>
+    
+    
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <p>this is template form</p>
+        <form class="container" style="padding: 5px; margin: 5px;" #registerForm="ngForm">
+            <input type="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" name="email" required ngModel #email="ngModel"/>
+            <h5 class="red-text" [hidden]="email.valid||email.untouched">Enter valid email </h5>
+            <input type="password" name="password1" required minlength="6" ngModel #password1="ngModel" />
+            <h5 class="red-text" [hidden]="password1.valid||password1.untouched">Enter valid password </h5>
+            <input type="password"  name="password2" required minlength="6" ngModel #password2="ngModel" />
+            <h5 class="red-text" [hidden]="password1.valid||password2.untouched">Enter valid password </h5>
+            <button class="red btn large" [disabled]="registerForm.invalid" (click)="register(registerForm)">signup</button>
+        </form>
+       <h1> {{registerForm.value | json}}</h1>
+       
+</body>
+</html>

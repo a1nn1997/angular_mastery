@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <!-- <h1>hello bebo</h1>
+<p>this is poppy profile</p>
+<h1>
+  I am {{ name }} this double bracket to take variables from component is called
+  interpolation
+</h1> -->
+<input type="date" [(ngModel)]="my_date" />
+    <h2> date pipes is  {{my_date | date:'fullDate'}}, 
+        <br />
+
+      my age is {{ age }}, <br /> my status is {{ status }}, <br /> and my salary is
+      {{ salary | currency:"INR" }}
+      <br />
+      {{ getpug() }}
+    </h2>
+    <p>property binding below</p>
+    <button [class]="btn_col1" [disabled]="isDisable">click me</button>
+    <br />
+    <p>event binding below</p>
+    <button class="btn-large pink" (click)="conv_to_inr()">show salary</button>
+    <!-- <input type="text" [value]="inputValue" (input)="getInput($event)" /> -->
+    <!-- <input type="text" [value]="inputValue" (input)="inputValue = $any($event.target).value" /> -->
+    <p>
+      after importing formmodels in app.module.ts it is called 2 way binding
+    </p>
+
+    <input type="text" [(ngModel)]="inputValue" />
+    <h2>{{ inputValue }}</h2>
+    <p>below code to test ngIf else directive</p>
+    <h3 *ngIf="ct % 2 == 1; else t1">bebo poppy ko kissy krti he</h3>
+    <ng-template #t1>
+      <h4>bebo poppy ko kissy noi krti</h4>
+    </ng-template>
+    <p>ng me for loop</p>
+    <ul>
+      <!-- <li *ngFor="let f of fruits; index as i; even as e" [class]="e ? 'red' : 'blue'"> -->
+      <li
+        *ngFor="let f of fruits; index as i; even as e"
+        [ngClass]="{ red: e, blue: !e }"
+      >
+      <h5 *ngIf="e; else t2">50 % off</h5> 
+      <h5>{{ f }} lelo {{ i + 1 }}</h5>
+        <ng-template #t2>
+            <p> | represent pipes which were used with </p>
+          <h4> {{name | titlecase}} paisa poora dena hoga</h4>
+        </ng-template>
+      </li>
+    </ul>
+
+    <a href="https://angular.io/guide/"> angular basic is details</a>
+  </body>
+  <!-- Compiled and minified CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+  />
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</html>

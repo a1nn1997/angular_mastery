@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <p>this is reactive form it is better</p>
+        <form class="container" style="padding: 5px; margin: 5px;" [formGroup]="loginForm">
+            <input type="email" [formControl]="email" />
+            <h5 class="red-text" [hidden]="email.valid||email.untouched">Enter valid email </h5>
+            <br>
+            <input type="password" [formControl]="password" />
+            <h5 class="red-text" [hidden]="password.valid||password.untouched">Enter valid password </h5>
+            <button class="red btn large" [disabled]="loginForm.invalid" (click)="login()">Login</button>
+        </form>
+        <!-- <h1> {{email.value}}</h1>
+        <h1>{{email.valid}}</h1>     -->
+</body>
+</html>
