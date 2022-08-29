@@ -2,11 +2,14 @@ create project proj1
 ng new proj1
 
 run server on port 8090   // it can be put on start in package.json
- ng serve --host localhost --port 8090   /*or*/   npm start
-
+ ng serve --host localhost --port 8090 /*or*/   npm start
+ ng serve --host localhost --port 8090 --open  /*or*/   npm start
+ng server --open   //open terminal when run
 ng g c users     // to generate component c users
 ng g d directives/highlight   //to create new directive d highlight
 ng g p pipes/cc    //to create new pipe p cc
 ng g s services/joke     //create serivce s joke
 ng g c notfound -t -s   //FOR NOT FOUND COMPONENT
 ng g c users -t -s    //sub component
+
+from angular.json custom bootstrap can be added ref code with harry    https://www.youtube.com/watch?v=0LhBvp8qpro&list=WL&index=51  24 min approx

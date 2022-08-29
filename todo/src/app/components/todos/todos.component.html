@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+  <body>
+    <div class="container">
+      
+        <app-todo-add (todoAdd)="addTodo($event)"></app-todo-add>
+      </div>
+      <div class="container">
+      <h4 class="success">Your Todos</h4>
+      <div *ngIf="this.todos.length==0; else elseBlock">Add todos to see magic</div>
+      <ng-template #elseBlock> 
+       <div cdkDropList class="container" (cdkDropListDropped)="drop($event)">
+      <div  class="text-center mb-5 mu-5" *ngFor="let todo of todos; index as i" cdkDrag >
+        <app-todo-item [todo]="todo" [i]="i" (todoDelete)="deleteTodo($event)" (todoCheckbox)="toggleTodo($event)"></app-todo-item>
+      </div>
+      </div>
+    </ng-template>
+    </div>
+  </body>
+</html>
