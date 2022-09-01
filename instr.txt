@@ -13,3 +13,5 @@ ng g c notfound -t -s   //FOR NOT FOUND COMPONENT
 ng g c users -t -s    //sub component
 
 from angular.json custom bootstrap can be added ref code with harry    https://www.youtube.com/watch?v=0LhBvp8qpro&list=WL&index=51  24 min approx
+
+ng g -> generate guard    
