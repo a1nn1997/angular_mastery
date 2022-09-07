@@ -20,9 +20,8 @@ func Setup(app *fiber.App) {
 	app.Get("/api/post", controllers.GetPost)
 	app.Get("/api/post/:id", controllers.GetPostById)
 	app.Get("/api/postbyuser", controllers.PostByUserName)
-
-	//Post and Subreddit routes
 	app.Get("/api/post/bysubreddit/:id", controllers.PostBySubRedditId)
+
 	//Subreddit routes
 	app.Post("/api/subreddit", controllers.CreateSubreddit)
 	app.Get("/api/subreddit", controllers.GetSubreddit)

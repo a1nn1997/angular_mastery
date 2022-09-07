@@ -6,7 +6,7 @@ import(
 
 type Vote struct {
 	Id       		uint   				`json:"id"`
-	Type			string				`json:"vote_type" validate:"required"`
+	Type			string				`json:"vote_type" validate:"required,eq=UPVOTE|eq=DOWNVOTE"`
 	Created_at		time.Time			`json:"created_at"`
 	Updated_at		time.Time			`json:"updated_at"`
 	User_Id			uint				`json:"user_id" validate:"required"`				

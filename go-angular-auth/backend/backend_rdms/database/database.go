@@ -4,13 +4,20 @@ import (
 	"github.com/a1nn1997/go-auth/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"github.com/joho/godotenv"
+	"log"
+	"os"
 )
 
 var DB *gorm.DB
 
 // DBConfig represents db configuration
 func Connect() {
-	dsn := "root:123@tcp(127.0.0.1:3500)/go_ang_auth?charset=utf8mb4&parseTime=True&loc=Local"    //db setup  mysql  tcp is port of mysql
+	err := godotenv.Load(".env")
+	if err!=nil{
+		log.Fatal("error loading .env file")
+	}
+	dsn := os.Getenv("DATABASE_URL")    //db setup  mysql  tcp is port of mysql
     connection, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
