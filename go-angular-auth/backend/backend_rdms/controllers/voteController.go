@@ -5,7 +5,6 @@ import (
 	"github.com/a1nn1997/go-auth/models"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"time"
 	"strconv"
 )
 
@@ -31,37 +30,31 @@ func VotePost(c *fiber.Ctx) error {
 	if err := c.BodyParser(&data); err != nil {  
 		return err
 	}  //show error during parsing
-	postid,err:=strconv.Atoi(data["post_id"])
+	postid,err:=strconv.Atoi(data["postId"])
 	if err != nil {
 		return c.Status(400).JSON("unable to parse post id")
 	}
-	vote := models.Vote{
-		Type: data["vote_type"],
-		}
-	vote.User_Id=user.Id
-	vote.Post_id=uint(postid)
-	
+	votetype,err:=strconv.Atoi(data["voteType"])
+	if err != nil {
+		return c.Status(400).JSON("unable to parse voteType")
+	}
 	var post models.Post
-		err = findPost(postid, &post)
+	err = findPost(postid, &post)
 
 	if err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
 	
-	if(data["vote_type"]=="UPVOTE"){
+	if(votetype==0){
 	post.Vote=post.Vote+1
+	post.Upvote=true
+	post.Downvote=false
 	}else{
-		post.Vote=post.Vote-1	
+		post.Vote=post.Vote-1
+		post.Upvote=false
+		post.Downvote=true	
 	}
 	database.DB.Save(&post)
-	vote.Created_at,_= time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-	vote.Updated_at,_= time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-	database.DB.Create(&vote)
-	type Votestruct struct{
-		Vote_Outcome 	models.Vote		`json:"vote_outcome"`
-		Post_Outcome	models.Post		`json:"post_outcome"`
-	}
-	vs	:= Votestruct{Vote_Outcome:vote,Post_Outcome:post}
-	return c.JSON(vs)
+	return c.JSON(post)
 
 }

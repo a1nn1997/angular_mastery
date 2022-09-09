@@ -11,7 +11,10 @@ type Post struct {
 	Url				string				`json:"url"`
 	Created_at		time.Time			`json:"created_at"`
 	Updated_at		time.Time			`json:"updated_at"`
-	Vote			int					`json:"vote" validate:"required"`
-	User_Id			uint				`json:"user_id" validate:"required"`
-	Subreddit_id	uint				`json:"subreddit_id"`			
+	Comment_count	uint				`json:"commentCount" validate:"required"`				
+	Vote			uint				`json:"voteCount" validate:"required"`
+	Upvote			bool				`json:"upVote" validate:"required"`
+	Downvote		bool				`json:"downVote" validate:"required"`
+	User_Id			string				`json:"userName" validate:"required"`
+	Subreddit_id	string				`json:"subredditName"`			
 }

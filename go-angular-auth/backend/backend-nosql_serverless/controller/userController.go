@@ -86,6 +86,7 @@ func SignUp() gin.HandlerFunc{
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occured while updating time"})
 		}
 		user.Updated_at, err = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		//*user.Verified =true
 		if err != nil {
 			log.Panic(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "error occured while updating time"})
@@ -93,7 +94,6 @@ func SignUp() gin.HandlerFunc{
 		user.ID=primitive.NewObjectID()
 		usertype := "USER"
 		user.User_type= &usertype
-		*user.Verified =true
 		user.User_id=user.ID.Hex()
 		token, refreshToken, _ := utils.GenenrateAllTokens(*user.Email, *user.First_name, *user.Last_name, *user.User_type, user.User_id)
 		user.Token = &token

@@ -25,5 +25,5 @@ func Connect() {
 	}
 
 	DB = connection
-	connection.AutoMigrate(&models.User{}, &models.Comment{}, &models.Post{}, &models.SubReddit{}, &models.Vote{})
+	connection.AutoMigrate(&models.User{}, &models.Comment{}, &models.Post{}, &models.SubReddit{})
 }

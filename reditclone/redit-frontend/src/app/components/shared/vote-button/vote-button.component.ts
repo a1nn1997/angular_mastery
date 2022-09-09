@@ -16,7 +16,7 @@ import { VoteService } from '../vote.service';
 })
 export class VoteButtonComponent implements OnInit {
 
-   @Input() post: PostModel;
+  @Input() post: PostModel;
   votePayload: VotePayload;
   faArrowUp = faArrowUp;
   faArrowDown = faArrowDown;

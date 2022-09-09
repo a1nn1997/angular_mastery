@@ -1,13 +1,13 @@
 package controllers
 
 import (
+	"errors"
+	"strings"
+	"time"
 	"github.com/a1nn1997/go-auth/database"
 	"github.com/a1nn1997/go-auth/models"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"errors"
-	"time"
-	"strconv"
 )
 
 func CreateResponsePost(post models.Post) models.Post {
@@ -36,21 +36,32 @@ func CreatePost(c *fiber.Ctx) error {
 	if err := c.BodyParser(&data); err != nil {  
 		return err
 	}  //show error during parsing
-	subredditid,err:=strconv.Atoi(data["subreddit_id"])
+	/*var subreddit models.SubReddit
+	database.DB.Where(&subreddit, "title = ?", data["subreddit_id"]).First(&subreddit)
+	subredditid:=subreddit.Id,data["subreddit_id"]
 	if err != nil {
 		return c.Status(400).JSON("unable to parse post id")
-	}
+	}*/
 	post := models.Post{
 		Description:     data["description"],
 		Post_Name:     	data["title"],
 		Url:    		data["url"],
 		Vote:			0,
+		Upvote:			false,
+		Downvote:		false,
+		Comment_count:	0,
+
 	}   //it will stored  user date for model
-	post.Subreddit_id=uint(subredditid)
-	post.User_Id=user.Id
+	post.Subreddit_id=data["subredditName"]
+	post.User_Id=strings.Title(user.First_name)+" "+strings.Title(user.Last_name)
 	post.Created_at,_= time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	post.Updated_at,_= time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))	
 	database.DB.Create(&post)	//data stored in db
+	var subreddit models.SubReddit
+	database.DB.Where("title = ?", data["subredditName"]).First(&subreddit)
+	subreddit.NumberOfPost=subreddit.NumberOfPost+1
+	database.DB.Save(&subreddit)
+
 
 	return c.JSON(post)		//send json
 }

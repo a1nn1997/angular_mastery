@@ -1,13 +1,16 @@
 package controllers
 
 import (
+	"errors"
+	"reflect"
+	"strconv"
+	"strings"
+	"time"
+
 	"github.com/a1nn1997/go-auth/database"
 	"github.com/a1nn1997/go-auth/models"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"errors"
-	"time"
-	"strconv"
 )
 func CreateResponseComment(comment models.Comment) models.Comment {
 	return models.Comment{Id: comment.Id, Text: comment.Text, Created_at: comment.Created_at, Updated_at: comment.Updated_at, User_Id: comment.User_Id , Post_id: comment.Post_id}
@@ -43,18 +46,22 @@ func AddComment(c *fiber.Ctx) error {
 	if err := c.BodyParser(&data); err != nil {  
 		return err
 	}  //show error during parsing
-	postid,err:=strconv.Atoi(data["post_id"])
+	postid,err:=strconv.Atoi(data["postId"])
 	if err != nil {
-		return c.Status(400).JSON("unable to parse Comment id")
+		return c.Status(400).JSON(reflect.TypeOf(data["postId"]))//"unable to parse Comment id",
 	}
 	comment := models.Comment{
 		Text:     data["text"],
 	}   //it will stored  user date for model
 	comment.Post_id=uint(postid)
-	comment.User_Id=user.Id
+	comment.User_Id=strings.Title(user.First_name)+" "+strings.Title(user.Last_name)
 	comment.Created_at,_= time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	comment.Updated_at,_= time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))	
 	database.DB.Create(&comment)	//data stored in db
+	var post models.Post
+	database.DB.Where("id = ?", postid).First(&post)
+	post.Comment_count=post.Comment_count+1
+	database.DB.Save(&post)
 	return c.JSON(comment)		//send json
 }
 func GetComment(c *fiber.Ctx) error {

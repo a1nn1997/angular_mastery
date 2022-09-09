@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"errors"
+	"strings"
+	"time"
+
 	"github.com/a1nn1997/go-auth/database"
 	"github.com/a1nn1997/go-auth/models"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"time"
-	"errors"
 )
 
 func CreateResponseSubReddit(subreddit models.SubReddit) models.SubReddit {
@@ -35,10 +37,11 @@ func CreateSubreddit(c *fiber.Ctx) error {
 		return err
 	}  //show error during parsing
 	subreddit := models.SubReddit{
-		Title: data["title"],
-		Description: data["description"],
+		Title: 				data["title"],
+		Description: 		data["description"],
+		NumberOfPost: 		0,
 		}
-	subreddit.User_Id=user.Id
+	subreddit.User_Id=strings.Title(user.First_name)+" "+strings.Title(user.Last_name)
 	subreddit.Created_at,_= time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	subreddit.Updated_at,_= time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	database.DB.Create(&subreddit)
@@ -74,9 +77,9 @@ func GetSubreddit(c *fiber.Ctx) error {
 	return c.Status(200).JSON(response_subreddits)
 }
 
-func findSubReddit(id int, post *models.SubReddit) error {
-	database.DB.Find(&post, "id = ?", id)
-	if post.Id == 0 {
+func findSubReddit(id int, subreddit *models.SubReddit) error {
+	database.DB.Find(&subreddit, "id = ?", id)
+	if subreddit.Id == 0 {
 		return errors.New("post does not exist")
 	}
 	return nil

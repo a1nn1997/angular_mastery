@@ -9,6 +9,6 @@ type Comment struct {
 	Text			string				`json:"text" validate:"required min=1"`
 	Created_at		time.Time			`json:"created_at"`
 	Updated_at		time.Time			`json:"updated_at"`
-	User_Id			uint				`json:"user_id" validate:"required"`
-	Post_id			uint				`json:"post_id"  validate:"required"`
+	User_Id			string				`json:"username" validate:"required"`
+	Post_id			uint				`json:"postId"  validate:"required"`
 }

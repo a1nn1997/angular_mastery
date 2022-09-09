@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { PostModel } from '../shared/post-model';
+import { PostService } from '../shared/post.service';
 
 @Component({
   selector: 'app-home',
@@ -7,25 +9,18 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  message = '';
-  authEmitter = new EventEmitter<boolean>();
+  
+   posts: Array<PostModel> = [];
 
-  constructor(
-    private http: HttpClient
-  ) {
-  }
+  constructor(private postService: PostService) {
+    this.postService.getAllPosts().subscribe(post => {
+      this.posts = post;
+    });
+  } 
+
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8069/api/user', {withCredentials: true}).subscribe(
-      (res: any) => {
-        this.message = `Hi ${res.name}`;
-        this.authEmitter.emit(true);
-      },
-      err => {
-        this.message = 'You are not logged in';
-        this.authEmitter.emit(false);
-      }
-    );
+
   }
  
 
